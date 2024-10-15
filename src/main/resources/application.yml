@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ProjetoAvancadaWeb
+  datasource:
+    url: jdbc:postgresql://localhost:5432/AvancadaWeb
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+
