@@ -1,4 +1,10 @@
 package com.example.projetoavancadaweb.model.dto.response;
 
-public record UsuarioResponse (){
+import com.example.projetoavancadaweb.model.Usuario;
+
+public record UsuarioResponse (
+        Long id,
+        String email,
+        Usuario.Role role
+){
 }

@@ -1,13 +1,26 @@
 spring:
+
   application:
     name: ProjetoAvancadaWeb
+
+  main:
+    allow-circular-references: true
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/AvancadaWeb
+    url: jdbc:postgresql://172.23.71.93:5432/AvancadaWeb
     username: postgres
     password: root
+
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
     open-in-view: false
+
+token:
+  jwt:
+    issuer: projetoavancadaweb-exemple-issuer
+    secret-key: projetoavancadaweb-secret-key
+
+
 

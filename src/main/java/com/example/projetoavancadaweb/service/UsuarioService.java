@@ -1,42 +1,35 @@
 package com.example.projetoavancadaweb.service;
 
+import com.example.projetoavancadaweb.model.Role;
 import com.example.projetoavancadaweb.model.Usuario;
+import com.example.projetoavancadaweb.model.dto.request.CriarUsuarioRequest;
 import com.example.projetoavancadaweb.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder; // Passar como argumento
 
-//    private BCryptPasswordEncoder passwordEncoder;
-
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioService(UsuarioRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = userRepository;
+        this.passwordEncoder = passwordEncoder; // Receber o PasswordEncoder
     }
 
-    public Usuario criarUsuario(Usuario usuario) {
-        if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
-            throw new IllegalArgumentException("O email já está em uso.");
-        }
-        // Criptografa a senha antes de salvar
-        //usuario.setPassword(passwordEncoder.encode(usuario.getSenha()));
+    public void salvarUsuario(CriarUsuarioRequest criarUsuarioRequest) {
+        Usuario newUser = Usuario.builder()
+                .email(criarUsuarioRequest.email())
+                .password(passwordEncoder.encode(criarUsuarioRequest.password()))
+                .role(Role.builder().name(criarUsuarioRequest.role()).build().getName())
+                .build();
 
-        usuario.setPassword(usuario.getPassword());
-        return usuarioRepository.save(usuario);
+        usuarioRepository.save(newUser);
     }
 
-    public Usuario buscarPorEmail(String email) {
-        try {
-            return usuarioRepository.findByEmail(email);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Usuário não encontrado.");
-        }
-    }
-
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public Usuario buscarRolePorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
     }
 }
+

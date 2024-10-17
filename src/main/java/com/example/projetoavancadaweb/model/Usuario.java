@@ -1,16 +1,13 @@
 package com.example.projetoavancadaweb.model;
 
-import com.example.projetoavancadaweb.enuns.ROLE;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -23,5 +20,18 @@ public class Usuario {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private ROLE role;
+    @Column(name = "role", nullable = false, length = 25)
+    private Role role;
+
+    public enum Role {
+        ADMIN,
+
+        PAI,
+
+        COORD;
+
+        public String substring(int length) {
+            return this.toString().substring(length);
+        }
+    }
 }
