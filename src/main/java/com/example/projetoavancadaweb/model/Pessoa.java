@@ -1,31 +1,29 @@
 package com.example.projetoavancadaweb.model;
 
-import com.example.projetoavancadaweb.enuns.StatusRequisicao;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
-@Table(name = "requisicao")
-public class Requisicao {
+@Table(name = "usuario")
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String titulo;
-    private String descricao;
+    private String nome;
+    private String cpf;
+    private LocalDate dataNascimento;
+    private Endereco endereco;
+    private String telefone;
+    private String genero;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;
-
-    @Enumerated(EnumType.STRING)
-    private StatusRequisicao status;
-
-    @ManyToOne
-    private Usuario pai;  // Referência ao pai que fez a requisição
 }

@@ -4,12 +4,10 @@ import com.example.projetoavancadaweb.jwt.JwtUserDetailsService;
 import com.example.projetoavancadaweb.model.UserDetailsImpl;
 import com.example.projetoavancadaweb.model.Usuario;
 import com.example.projetoavancadaweb.repository.UsuarioRepository;
-import com.example.projetoavancadaweb.service.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,8 +44,6 @@ public class UsuarioAuthenticationFilter extends OncePerRequestFilter {
                                 modelUserDetails.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else {
-                throw new RuntimeException("Token inexistente!");
             }
         }
         filterChain.doFilter(request, response);
@@ -55,7 +51,7 @@ public class UsuarioAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean verificaEndpointsPublicos(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        return !Arrays.asList("/api/users/login", "/api/users").contains(requestURI);
+        return !Arrays.asList("/api/usuarios/login", "/api/usuarios").contains(requestURI);
     }
 
     private String recuperaToken(HttpServletRequest request) {

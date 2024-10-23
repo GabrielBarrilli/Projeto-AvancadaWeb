@@ -12,6 +12,7 @@ import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Objects;
 
 @Slf4j
 public class JwtUtils {
@@ -64,7 +65,7 @@ public class JwtUtils {
     }
 
     public static String getUsernameFromToken(String token) {
-        return getClaimsFromToken(token).getSubject();
+        return Objects.requireNonNull(getClaimsFromToken(token)).getSubject();
     }
 
     public static boolean isTokenValid(String token) {

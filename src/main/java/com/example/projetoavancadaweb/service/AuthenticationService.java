@@ -1,8 +1,8 @@
 package com.example.projetoavancadaweb.service;
 
 import com.example.projetoavancadaweb.model.UserDetailsImpl;
-import com.example.projetoavancadaweb.model.dto.request.JwtTokenRequest;
-import com.example.projetoavancadaweb.model.dto.request.LoginUsuarioRequest;
+import com.example.projetoavancadaweb.web.dto.request.JwtTokenRequest;
+import com.example.projetoavancadaweb.web.dto.request.LoginUsuarioRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

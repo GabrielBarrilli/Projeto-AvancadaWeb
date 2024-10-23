@@ -34,4 +34,9 @@ public class Usuario {
             return this.toString().substring(length);
         }
     }
+
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
+    private boolean ativo;
 }

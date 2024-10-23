@@ -13,14 +13,16 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
-    show-sql: true
+      ddl-auto: create
+    show-sql: false
     open-in-view: false
 
-token:
-  jwt:
-    issuer: projetoavancadaweb-exemple-issuer
-    secret-key: projetoavancadaweb-secret-key
+springdoc:
+  swagger-ui:
+    path: /gestao-requisicoes.html
 
+  api-docs:
+    path: /gestao-requisicoes
 
+  packages-to-scan: com.example.projetoavancadaweb.web.controller
 

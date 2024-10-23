@@ -1,4 +1,4 @@
-package com.example.projetoavancadaweb.model.dto.request;
+package com.example.projetoavancadaweb.web.dto.request;
 
 public record LoginUsuarioRequest(
         String email,

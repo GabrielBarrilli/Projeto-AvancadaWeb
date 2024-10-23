@@ -1,4 +1,4 @@
-package com.example.projetoavancadaweb.controller;
+package com.example.projetoavancadaweb.web.controller;
 
 import com.example.projetoavancadaweb.enuns.StatusRequisicao;
 import com.example.projetoavancadaweb.model.Requisicao;

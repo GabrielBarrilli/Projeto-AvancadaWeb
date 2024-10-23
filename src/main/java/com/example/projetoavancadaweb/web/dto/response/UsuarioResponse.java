@@ -1,4 +1,4 @@
-package com.example.projetoavancadaweb.model.dto.response;
+package com.example.projetoavancadaweb.web.dto.response;
 
 import com.example.projetoavancadaweb.model.Usuario;
 
