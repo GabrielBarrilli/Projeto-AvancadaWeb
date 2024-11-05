@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuario")
+@Table(name = "pessoa")
 public class Pessoa {
 
     @Id
@@ -21,6 +21,8 @@ public class Pessoa {
     private String nome;
     private String cpf;
     private LocalDate dataNascimento;
+
+    @Embedded
     private Endereco endereco;
     private String telefone;
     private String genero;

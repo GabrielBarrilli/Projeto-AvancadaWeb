@@ -1,6 +1,7 @@
 package com.example.projetoavancadaweb.model;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Embeddable
@@ -9,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "endereco")
 public class Endereco {
     private String estado;
     private String cidade;

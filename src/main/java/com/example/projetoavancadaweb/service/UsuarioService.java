@@ -3,6 +3,7 @@ package com.example.projetoavancadaweb.service;
 import com.example.projetoavancadaweb.model.Pessoa;
 import com.example.projetoavancadaweb.model.Role;
 import com.example.projetoavancadaweb.model.Usuario;
+import com.example.projetoavancadaweb.repository.PessoaRepository;
 import com.example.projetoavancadaweb.repository.UsuarioRepository;
 import com.example.projetoavancadaweb.web.dto.request.CriarUsuarioRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,20 +16,16 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PessoaRepository pessoaRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository userRepository, PessoaRepository pessoaRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = userRepository;
+        this.pessoaRepository = pessoaRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public void salvarUsuario(Usuario.Role role, CriarUsuarioRequest criarUsuarioRequest) {
-        Usuario newUser = Usuario.builder()
-                .email(criarUsuarioRequest.email())
-                .password(passwordEncoder.encode(criarUsuarioRequest.password()))
-                .role(Role.builder().name(Usuario.Role.valueOf(role.name())).build().getName())
-                .ativo(true)
-                .build();
 
         Pessoa pessoa = Pessoa.builder()
                 .nome(criarUsuarioRequest.nome())
@@ -43,7 +40,18 @@ public class UsuarioService {
                 .dataAtualizacao(LocalDateTime.now())
                 .build();
 
+        pessoaRepository.save(pessoa);
+
+        Usuario newUser = Usuario.builder()
+                .username(criarUsuarioRequest.username())
+                .email(criarUsuarioRequest.email())
+                .password(passwordEncoder.encode(criarUsuarioRequest.password()))
+                .role(Role.builder().name(Usuario.Role.valueOf(role.name())).build().getName())
+                .ativo(true)
+                .build();
+
         newUser.setPessoa(pessoa);
+
         usuarioRepository.save(newUser);
     }
 

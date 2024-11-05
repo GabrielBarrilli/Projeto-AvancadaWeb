@@ -23,15 +23,6 @@ public class SwaggerConfig {
                         .version("v1"));
     }
 
-//    @Bean
-//    public OpenAPI customOpenAPI() {
-//        return new OpenAPI()
-//                .components(new Components().addSecuritySchemes("bearer-key",
-//                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
-//                .addSecurityItem(new SecurityRequirement().addList("bearer-key"))
-//                .info(new Info().title("API").version("v1"));
-//    }
-
     private SecurityScheme securityScheme() {
         return new SecurityScheme()
                 .description("Insira um bearer token válido para prosseguir")

@@ -20,8 +20,10 @@ public class Requisicao {
 
     private String titulo;
     private String descricao;
+    private String resposta;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;
+    private String usuarioUltimaAlteracao;
 
     @Enumerated(EnumType.STRING)
     private StatusRequisicao status;

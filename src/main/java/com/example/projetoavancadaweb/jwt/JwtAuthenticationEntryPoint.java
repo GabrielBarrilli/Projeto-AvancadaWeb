@@ -16,7 +16,7 @@ public class JwtAuthenticationEntryPoint  implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("Http Status 401 {}" , authException.getMessage());
 
-        response.setHeader("www-authenticate" , "Bearer realm='/api/v1/auth'");
+        response.setHeader("www-authenticate" , "Bearer realm='/login'");
         response.sendError(401);
     }
 }

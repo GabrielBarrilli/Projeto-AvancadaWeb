@@ -1,5 +1,6 @@
 package com.example.projetoavancadaweb.jwt;
 
+import com.example.projetoavancadaweb.model.UserDetailsImpl;
 import com.example.projetoavancadaweb.model.Usuario;
 import com.example.projetoavancadaweb.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioService.buscarRolePorUsername(username);
-        return new JwtUserDetails(usuario); // Certifique-se de que está chamando a classe correta
+        return new UserDetailsImpl(usuario);
     }
 
     public JwtToken getTokenAuthenticated(String username) {

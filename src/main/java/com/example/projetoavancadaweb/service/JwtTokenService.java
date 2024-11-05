@@ -5,18 +5,22 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.projetoavancadaweb.model.UserDetailsImpl;
-import lombok.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+@RequiredArgsConstructor
 @Service
 public class JwtTokenService {
 
+    @Value("${jwt.secret-key}")
     private String secret_Key;
 
+    @Value("${jwt.issuer}")
     private String issuer;
 
     public String generateToken(UserDetailsImpl user) {
@@ -48,7 +52,7 @@ public class JwtTokenService {
 
     private Instant dataExpiracao() {
         return ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"))
-                .plusHours(2).toInstant();
+                .plusHours(2).toInstant(); // considere tornar isso configurável
     }
 
     private Instant dataCriacao() {

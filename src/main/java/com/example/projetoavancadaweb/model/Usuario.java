@@ -38,5 +38,5 @@ public class Usuario {
     @OneToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
-    private boolean ativo;
+    private Boolean ativo;
 }
