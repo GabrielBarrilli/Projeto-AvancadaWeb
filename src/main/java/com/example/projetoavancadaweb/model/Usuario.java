@@ -24,7 +24,7 @@ public class Usuario {
     private Role role;
 
     public enum Role {
-        ADMIN,
+        ROLE_ADMIN,
 
         PAI,
 

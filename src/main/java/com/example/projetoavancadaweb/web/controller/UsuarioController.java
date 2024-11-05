@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,13 +54,14 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/usuarios/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/api/usuarios/username/{username}")
     public ResponseEntity<Usuario> buscarUsuarioPorUsername(@PathVariable String username) {
         Usuario usuario = usuarioService.buscarRolePorUsername(username);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
-    @GetMapping("/api/usuarios/{email}")
+    @GetMapping("/api/usuarios/email/{email}")
     public ResponseEntity<Usuario> buscarUsuarioPorEmail(@PathVariable String email) {
         Usuario usuario = usuarioService.buscarRolePorEmail(email);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
@@ -77,7 +79,7 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
-    @GetMapping("/api/usuarios/{id}")
+    @GetMapping("/api/usuarios/porId/{id}")
     public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
         Usuario usuario = usuarioService.buscarPorId(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
