@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "requisicao")
 public class Requisicao {
@@ -20,6 +21,7 @@ public class Requisicao {
 
     private String titulo;
     private String descricao;
+    private String questoes;
     private String resposta;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;

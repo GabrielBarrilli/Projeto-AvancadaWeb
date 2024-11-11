@@ -1,5 +1,6 @@
 package com.example.projetoavancadaweb.service;
 
+import com.example.projetoavancadaweb.model.Aluno;
 import com.example.projetoavancadaweb.model.Pessoa;
 import com.example.projetoavancadaweb.model.Role;
 import com.example.projetoavancadaweb.model.Usuario;
@@ -42,6 +43,12 @@ public class UsuarioService {
 
         pessoaRepository.save(pessoa);
 
+        Aluno aluno = Aluno.builder()
+                .nomeAluno(criarUsuarioRequest.nomeAluno())
+                .grauParentesco(criarUsuarioRequest.grauParentesco())
+                .dataNascimento(criarUsuarioRequest.getDataNascimentoAlunoAsLocalDate())
+                .build();
+
         Usuario newUser = Usuario.builder()
                 .username(criarUsuarioRequest.username())
                 .email(criarUsuarioRequest.email())
@@ -51,6 +58,7 @@ public class UsuarioService {
                 .build();
 
         newUser.setPessoa(pessoa);
+        newUser.setAluno(aluno);
 
         usuarioRepository.save(newUser);
     }

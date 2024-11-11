@@ -7,6 +7,7 @@ import com.example.projetoavancadaweb.repository.RequisicaoRepository;
 import com.example.projetoavancadaweb.repository.UsuarioRepository;
 import com.example.projetoavancadaweb.security.SecurityUtil;
 import com.example.projetoavancadaweb.web.dto.request.AtualizaRequisicaoRequest;
+import com.example.projetoavancadaweb.web.dto.request.CriarRequisicaoRequest;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,22 @@ public class RequisicaoService {
         this.atualizaService = atualizaService;
     }
 
-    public Requisicao criarRequisicao(Requisicao requisicao, String emailUsuario) {
-        Usuario pai = usuarioRepository.findByEmail(emailUsuario);
-        requisicao.setPai(pai);
-        requisicao.setStatus(StatusRequisicao.PENDENTE);
-        requisicao.setDataCriacao(LocalDateTime.now());
-        return requisicaoRepository.save(requisicao);
+    public Requisicao criarRequisicao(CriarRequisicaoRequest requisicao, String username) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
+
+        Requisicao novaRequisicao = Requisicao.builder()
+                .titulo(requisicao.titulo())
+                .descricao(requisicao.descricao())
+                .questoes(requisicao.questoes())
+                .resposta(requisicao.resposta())
+                .dataCriacao(LocalDateTime.now())
+                .dataAtualizacao(LocalDateTime.now())
+                .status(StatusRequisicao.PENDENTE)
+                .usuarioUltimaAlteracao(usuario.getUsername())
+                .pai(usuario)
+                .build();
+
+        return requisicaoRepository.save(novaRequisicao);
     }
 
     public List<Requisicao> listarRequisicoes() {

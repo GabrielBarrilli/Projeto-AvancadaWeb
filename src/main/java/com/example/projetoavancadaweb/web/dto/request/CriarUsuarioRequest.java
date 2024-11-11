@@ -24,7 +24,12 @@ public record CriarUsuarioRequest(
         String genero,
 
         // Criar endereço com estado, cidade, cep, logradouro, número, complemento e bairro
-        Endereco endereco
+        Endereco endereco,
+
+        //
+        String nomeAluno,
+        String dataNascimentoAluno,
+        String grauParentesco
 ) {
     // Converter a string dataNascimento para LocalDate no formato dd/MM/yyyy
     public LocalDate getDataNascimentoAsLocalDate() {
@@ -36,4 +41,13 @@ public record CriarUsuarioRequest(
         }
     }
 
+    // Converter a string dataNascimento para LocalDate no formato dd/MM/yyyy
+    public LocalDate getDataNascimentoAlunoAsLocalDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(dataNascimentoAluno, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Data de nascimento no formato inválido: " + dataNascimentoAluno);
+        }
+    }
 }

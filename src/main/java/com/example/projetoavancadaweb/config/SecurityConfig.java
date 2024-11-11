@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                             auth
-                                    .requestMatchers("/api/**").authenticated();
+                                    .requestMatchers("/api/**").permitAll();
                             auth
                                     .requestMatchers(DOCUMENTATION_OPENAPI).permitAll()
                                     .anyRequest().permitAll();

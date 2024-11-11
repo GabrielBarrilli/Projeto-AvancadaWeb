@@ -24,9 +24,9 @@ public class Usuario {
     private Role role;
 
     public enum Role {
-        ROLE_ADMIN,
+        ADMIN,
 
-        PAI,
+        RESPONSAVEL,
 
         COORD;
 
@@ -38,5 +38,8 @@ public class Usuario {
     @OneToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
+
+    @Embedded
+    private Aluno aluno;
     private Boolean ativo;
 }

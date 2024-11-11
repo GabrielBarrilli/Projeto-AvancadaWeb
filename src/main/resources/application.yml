@@ -15,7 +15,7 @@ spring:
       maximum-pool-size: 10 # Número máximo de conexões no pool
       minimum-idle: 5 # Mínimo de conexões ociosas
       idle-timeout: 600000 # Tempo máximo que uma conexão pode ficar ociosa (10 minutos)
-      max-lifetime: 1800000 # Tempo máximo de vida de uma conexão (30 minutos)
+      max-lifetime: 3600000 # Tempo máximo de vida de uma conexão (30 minutos)
       connection-timeout: 30000 # Tempo máximo para tentar obter uma conexão (30 segundos)
       validation-timeout: 5000 # Tempo máximo para validar uma conexão (5 segundos)
       connection-test-query: "SELECT 1" # Consulta para validar conexões

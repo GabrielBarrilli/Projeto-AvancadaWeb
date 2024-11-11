@@ -3,6 +3,7 @@ package com.example.projetoavancadaweb.web.controller;
 import com.example.projetoavancadaweb.model.Usuario;
 import com.example.projetoavancadaweb.service.AuthenticationService;
 import com.example.projetoavancadaweb.service.UsuarioService;
+import com.example.projetoavancadaweb.service.ValidacaoService;
 import com.example.projetoavancadaweb.web.dto.request.CriarUsuarioRequest;
 import com.example.projetoavancadaweb.web.dto.request.JwtTokenRequest;
 import com.example.projetoavancadaweb.web.dto.request.LoginUsuarioRequest;
@@ -14,20 +15,23 @@ import jakarta.validation.Valid;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
 @RequestMapping
 public class UsuarioController {
 
+    private final ValidacaoService validacaoService;
+
     private final UsuarioService usuarioService;
 
     private final AuthenticationService authenticationService;
 
-    public UsuarioController(UsuarioService usuarioService, AuthenticationService authenticationService) {
+    public UsuarioController(ValidacaoService validacaoService, UsuarioService usuarioService, AuthenticationService authenticationService) {
+        this.validacaoService = validacaoService;
         this.usuarioService = usuarioService;
         this.authenticationService = authenticationService;
     }
@@ -54,33 +58,42 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/api/usuarios/username/{username}")
-    public ResponseEntity<Usuario> buscarUsuarioPorUsername(@PathVariable String username) {
+    public ResponseEntity<Usuario> buscarUsuarioPorUsername(@PathVariable String username, @RequestHeader(value = "Authorization", required = false) String token) throws AccessDeniedException {
+        validacaoService.validarRoleByToken(List.of("ADMIN"), token);
+
         Usuario usuario = usuarioService.buscarRolePorUsername(username);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @GetMapping("/api/usuarios/email/{email}")
-    public ResponseEntity<Usuario> buscarUsuarioPorEmail(@PathVariable String email) {
+    public ResponseEntity<Usuario> buscarUsuarioPorEmail(@PathVariable String email, @RequestHeader(value = "Authorization", required = false) String token) throws AccessDeniedException {
+        validacaoService.validarRoleByToken(List.of("ADMIN", "COORD"), token);
+
         Usuario usuario = usuarioService.buscarRolePorEmail(email);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @GetMapping("/api/usuarios/ativos")
-    public ResponseEntity<List<Usuario>> buscarUsuariosAtivos() {
+    public ResponseEntity<List<Usuario>> buscarUsuariosAtivos(@RequestHeader(value = "Authorization", required = false) String token) throws AccessDeniedException {
+        validacaoService.validarRoleByToken(List.of("ADMIN", "COORD"), token);
+
         List<Usuario> usuarios = usuarioService.buscarByAtivo(true);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
     @GetMapping("/api/usuarios/getAll")
-    public ResponseEntity<List<Usuario>> buscarTodosUsuarios() {
+    public ResponseEntity<List<Usuario>> buscarTodosUsuarios(@RequestHeader(value = "Authorization", required = false) String token) throws AccessDeniedException {
+        validacaoService.validarRoleByToken(List.of("ADMIN", "COORD"), token);
+
         List<Usuario> usuarios = usuarioService.buscarTodos();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
     @GetMapping("/api/usuarios/porId/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id, @RequestHeader(value = "Authorization", required = false) String token) throws AccessDeniedException {
+        validacaoService.validarRoleByToken(List.of("ADMIN", "COORD"), token);
+
         Usuario usuario = usuarioService.buscarPorId(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
