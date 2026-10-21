@@ -7,9 +7,9 @@ spring:
     allow-circular-references: true
 
   datasource:
-    url: jdbc:postgresql://172.23.71.93:5432/AvancadaWeb
-    username: postgres
-    password: root
+    url: ${DB_URL}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -20,7 +20,7 @@ spring:
 token:
   jwt:
     issuer: projetoavancadaweb-exemple-issuer
-    secret-key: projetoavancadaweb-secret-key
+    secret-key: ${JWT_SECRET}
 
 
 
